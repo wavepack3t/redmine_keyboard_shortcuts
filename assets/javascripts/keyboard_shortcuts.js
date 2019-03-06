@@ -177,7 +177,7 @@ var KsGlobalManager = Class.extend({
         resp(matches);
       },
       close: function() {
-        self.selectorChange();
+        self.issueChange();
       }
     });
     $('#search-box').focus();
@@ -219,7 +219,7 @@ var KsGlobalManager = Class.extend({
   issueChange: function() {
     var choice = $('#search-box').val();
     $.each(ks_issues, function(i, issue) {
-      if (issue.identifier == choice) {
+      if (issue.id == choice) {
         ks_dispatcher.go('issues/' + issue.id);
       }
     });
