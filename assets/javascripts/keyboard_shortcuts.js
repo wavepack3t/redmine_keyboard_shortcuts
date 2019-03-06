@@ -169,8 +169,10 @@ var KsGlobalManager = Class.extend({
     $('#search-box').autocomplete({
       source: function(req, resp) {
         var matches = [];
-        $.each(ks_projects, function(i, project) {
-          matches.push({label: project.name, value: project.identifier});
+        $.each(ks_issues, function(i, issue) {
+          if (issue.subject.indexOf(req.term) !== -1 || issue.id == req.term) {
+            matches.push({label: issue.subject, value: issue.id});
+	  }
         });
         resp(matches);
       },
@@ -178,6 +180,11 @@ var KsGlobalManager = Class.extend({
         self.selectorChange();
       }
     });
+    $('#search-box').focus();
+    $('#search-box').on('keyup', function(e) {
+      if (e.which != 40 && e.which != 38 && e.which != 13) self.selectorChange();
+    });
+    dialog.fixPosition();
   },
 
   changeProject: function(e) {
@@ -207,6 +214,15 @@ var KsGlobalManager = Class.extend({
       if (e.which != 40 && e.which != 38 && e.which != 13) self.selectorChange();
     });
     dialog.fixPosition();
+  },
+
+  issueChange: function() {
+    var choice = $('#search-box').val();
+    $.each(ks_issues, function(i, issue) {
+      if (issue.identifier == choice) {
+        ks_dispatcher.go('issues/' + issue.id);
+      }
+    });
   },
 
   selectorChange: function() {
