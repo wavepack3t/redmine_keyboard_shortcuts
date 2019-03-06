@@ -151,7 +151,7 @@ var KsGlobalManager = Class.extend({
         description: "See all available shortcuts",
         allowInDialog: true
       },
-      /: {
+      '/': {
         press: this.searchIssues.bind(this),
         description: "Search issues across all projects",
       }
@@ -171,14 +171,14 @@ var KsGlobalManager = Class.extend({
         var matches = [];
         $.each(ks_projects, function(i, project) {
           matches.push({label: project.name, value: project.identifier});
-        }
-        resp(matches)
+        });
+        resp(matches);
       },
       close: function() {
         self.selectorChange();
       }
-    })
-  }
+    });
+  },
 
   changeProject: function(e) {
     e.preventDefault();
